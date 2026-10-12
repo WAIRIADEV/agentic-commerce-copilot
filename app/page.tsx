@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import Image from 'next/image';
 import ProductTable from '../components/ProductTable';
 
 type Product = {
@@ -93,6 +94,9 @@ export default function Home() {
   async function buyProduct(product: Product) {
     setBuyingId(product.id);
     try {
+      // Save the product so the success page can show a recap
+      localStorage.setItem('lastProduct', JSON.stringify(product));
+
       const res = await fetch('/api/paypal/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -342,12 +346,13 @@ function ProductCard({
           : 'border-gray-200'
       }`}
     >
-      <div className="aspect-video bg-gray-100 overflow-hidden">
-        <img
+      <div className="aspect-video bg-gray-100 overflow-hidden relative">
+        <Image
           src={product.image}
           alt={product.name}
+          width={600}
+          height={400}
           className="w-full h-full object-cover"
-          loading="lazy"
         />
       </div>
       <div className="p-4">

@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo } from 'react';
+import Image from 'next/image';
 import { AgGridReact } from 'ag-grid-react';
 import {
   AllCommunityModule,
@@ -47,9 +48,11 @@ export default function ProductTable({
           if (!product) return null;
           return (
             <div className="flex items-center gap-3 py-1">
-              <img
+              <Image
                 src={product.image}
                 alt={product.name}
+                width={40}
+                height={40}
                 className="w-10 h-10 rounded object-cover shrink-0"
               />
               <span className="text-sm">{product.name}</span>
