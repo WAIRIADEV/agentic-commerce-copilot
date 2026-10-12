@@ -24,7 +24,3 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
-.ag-row-recommended {
-  background-color: #ecfdf5 !important;
-  font-weight: 500;
-}
