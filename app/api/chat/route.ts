@@ -16,7 +16,7 @@ export async function POST(req: Request) {
     const lastUserMessage =
       [...messages].reverse().find((m) => m.role === 'user')?.content || '';
 
-    // ── Step 1: Ask the AI to extract search parameters as JSON ──
+    // ── Step 1: Extract search parameters as JSON ──
     const parseResponse = await groq.chat.completions.create({
       model: 'openai/gpt-oss-120b',
       messages: [
@@ -52,7 +52,6 @@ Examples:
     // ── Step 2: Run our own search ──
     let matchedProducts: Product[] = searchProducts(query, maxPrice);
 
-    // Fallback: if no matches, try broader search without price
     if (matchedProducts.length === 0) {
       matchedProducts = searchProducts(query);
     }
@@ -75,8 +74,12 @@ Examples:
           role: 'system',
           content: `You are an AI shopping agent for the "Agentic Commerce Copilot" demo.
 You will be given a list of products. Recommend exactly ONE of them in a friendly, concise reply.
-Mention the name, price, and eco score. End with a clear one-line recommendation.
-Never invent products. Only recommend from the list provided.`,
+
+Rules:
+- Do NOT use markdown. No **, no *, no #, no backticks. Plain text only.
+- Mention the product name, price, and eco score.
+- End with a clear one-line recommendation starting with "I recommend".
+- Never invent products. Only recommend from the list provided.`,
         },
         {
           role: 'user',
@@ -95,9 +98,24 @@ Recommend one product.`,
       recommendResponse.choices[0]?.message?.content ||
       "Sorry, I couldn't put together a recommendation.";
 
+    // ── Step 4: Move the AI-named product to the front ──
+    const lowerReply = reply.toLowerCase();
+    const recommendedIndex = matchedProducts.findIndex((p) =>
+      lowerReply.includes(p.name.toLowerCase())
+    );
+
+    let orderedProducts = matchedProducts;
+    if (recommendedIndex > 0) {
+      orderedProducts = [
+        matchedProducts[recommendedIndex],
+        ...matchedProducts.slice(0, recommendedIndex),
+        ...matchedProducts.slice(recommendedIndex + 1),
+      ];
+    }
+
     return NextResponse.json({
       reply,
-      products: matchedProducts,
+      products: orderedProducts,
     });
   } catch (err) {
     console.error('Chat error:', err);
