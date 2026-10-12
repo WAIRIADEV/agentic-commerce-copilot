@@ -21,6 +21,7 @@ type Product = {
   shippingDays: number;
   rating: number;
   tags: string[];
+  image: string;
 };
 
 export default function ProductTable({
@@ -39,8 +40,22 @@ export default function ProductTable({
       {
         field: 'name',
         headerName: 'Product',
-        width: 280,
-        minWidth: 240,
+        width: 340,
+        minWidth: 280,
+        cellRenderer: (p: ICellRendererParams<Product>) => {
+          const product = p.data;
+          if (!product) return null;
+          return (
+            <div className="flex items-center gap-3 py-1">
+              <img
+                src={product.image}
+                alt={product.name}
+                className="w-10 h-10 rounded object-cover shrink-0"
+              />
+              <span className="text-sm">{product.name}</span>
+            </div>
+          );
+        },
       },
       {
         field: 'price',
@@ -102,13 +117,14 @@ export default function ProductTable({
   );
 
   return (
-    <div style={{ height: 420, width: '100%' }}>
+    <div style={{ height: 460, width: '100%' }}>
       <AgGridReact<Product>
         theme={themeQuartz}
         rowData={products}
         columnDefs={columnDefs}
         defaultColDef={defaultColDef}
         getRowId={(p) => p.data.id}
+        getRowHeight={() => 60}
         getRowStyle={(params) =>
           params.data?.id === recommendedId
             ? { backgroundColor: '#ecfdf5', fontWeight: '500' }

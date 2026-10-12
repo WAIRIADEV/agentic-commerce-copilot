@@ -12,6 +12,7 @@ type Product = {
   shippingDays: number;
   rating: number;
   tags: string[];
+  image: string;
 };
 
 type Message = {
@@ -335,37 +336,49 @@ function ProductCard({
   const isBuying = buyingId === product.id;
   return (
     <div
-      className={`rounded-xl border p-4 bg-white transition ${
+      className={`rounded-xl border overflow-hidden bg-white transition ${
         highlighted
           ? 'border-green-400 ring-2 ring-green-100'
           : 'border-gray-200'
       }`}
     >
-      {highlighted && (
-        <span className="inline-block bg-green-100 text-green-800 text-xs font-semibold px-2 py-0.5 rounded mb-2">
-          ⭐ AI&apos;s Pick
-        </span>
-      )}
-      <h3 className="font-semibold text-gray-900">{product.name}</h3>
-      <p className="text-sm text-gray-600 mt-1 line-clamp-2">
-        {product.description}
-      </p>
-      <div className="flex items-center gap-3 mt-3 text-xs text-gray-500">
-        <span>⭐ {product.rating}</span>
-        <span>🌱 Eco {product.ecoScore}/10</span>
-        <span>🚚 {product.shippingDays}d</span>
+      <div className="aspect-video bg-gray-100 overflow-hidden">
+        <img
+          src={product.image}
+          alt={product.name}
+          className="w-full h-full object-cover"
+          loading="lazy"
+        />
       </div>
-      <div className="flex items-center justify-between mt-4">
-        <span className="text-lg font-bold text-gray-900">
-          ${product.price.toFixed(2)}
-        </span>
-        <button
-          onClick={() => onBuy(product)}
-          disabled={isBuying}
-          className="bg-[#0070ba] hover:bg-[#005ea6] text-white text-sm font-medium px-4 py-2 rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {isBuying ? 'Redirecting...' : 'Buy with PayPal'}
-        </button>
+      <div className="p-4">
+        {highlighted && (
+          <span className="inline-block bg-green-100 text-green-800 text-xs font-semibold px-2 py-0.5 rounded mb-2">
+            AI&apos;s Pick
+          </span>
+        )}
+        <h3 className="font-semibold text-gray-900">{product.name}</h3>
+        <p className="text-sm text-gray-600 mt-1 line-clamp-2">
+          {product.description}
+        </p>
+        <div className="flex items-center gap-2 mt-3 text-xs text-gray-500">
+          <span>Rating {product.rating}</span>
+          <span>·</span>
+          <span>Eco {product.ecoScore}/10</span>
+          <span>·</span>
+          <span>Ships in {product.shippingDays}d</span>
+        </div>
+        <div className="flex items-center justify-between mt-4">
+          <span className="text-lg font-bold text-gray-900">
+            ${product.price.toFixed(2)}
+          </span>
+          <button
+            onClick={() => onBuy(product)}
+            disabled={isBuying}
+            className="bg-[#0070ba] hover:bg-[#005ea6] text-white text-sm font-medium px-4 py-2 rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isBuying ? 'Redirecting...' : 'Buy with PayPal'}
+          </button>
+        </div>
       </div>
     </div>
   );

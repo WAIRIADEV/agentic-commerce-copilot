@@ -9,20 +9,20 @@ export type Product = {
   shippingDays: number;
   rating: number;
   tags: string[];
+  image: string;
 };
 
 export const products: Product[] = productsData as Product[];
 
-// Basic search function the AI will use later
 export function searchProducts(query: string, maxPrice?: number): Product[] {
   const lowerQuery = query.toLowerCase();
-  
+
   return products.filter((p) => {
-    const matchesQuery = 
+    const matchesQuery =
       p.name.toLowerCase().includes(lowerQuery) ||
       p.description.toLowerCase().includes(lowerQuery) ||
       p.tags.some((tag) => tag.toLowerCase().includes(lowerQuery));
-      
+
     const matchesPrice = maxPrice ? p.price <= maxPrice : true;
 
     return matchesQuery && matchesPrice;
