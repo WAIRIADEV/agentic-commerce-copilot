@@ -1,0 +1,152 @@
+[
+  {
+    "id": "p_001",
+    "name": "Bamboo Toothbrush Set",
+    "price": 12.99,
+    "description": "Pack of 4 biodegradable bamboo toothbrushes with soft bristles.",
+    "ecoScore": 9,
+    "shippingDays": 3,
+    "rating": 4.5,
+    "tags": ["eco-friendly", "home", "gift", "under-25"]
+  },
+  {
+    "id": "p_002",
+    "name": "Solar Power Bank 20000mAh",
+    "price": 45.99,
+    "description": "Portable solar charger with dual USB ports, waterproof.",
+    "ecoScore": 8,
+    "shippingDays": 2,
+    "rating": 4.7,
+    "tags": ["eco-friendly", "tech", "travel", "gift"]
+  },
+  {
+    "id": "p_003",
+    "name": "Recycled Leather Journal",
+    "price": 28.50,
+    "description": "Handmade journal with 200 pages of recycled paper.",
+    "ecoScore": 9,
+    "shippingDays": 4,
+    "rating": 4.8,
+    "tags": ["eco-friendly", "stationery", "gift"]
+  },
+  {
+    "id": "p_004",
+    "name": "Organic Cotton T-Shirt",
+    "price": 32.00,
+    "description": "Soft, breathable t-shirt made from 100% organic cotton.",
+    "ecoScore": 10,
+    "shippingDays": 5,
+    "rating": 4.6,
+    "tags": ["eco-friendly", "clothing", "gift"]
+  },
+  {
+    "id": "p_005",
+    "name": "Plantable Seed Paper Cards",
+    "price": 15.00,
+    "description": "Set of 10 greeting cards embedded with wildflower seeds.",
+    "ecoScore": 10,
+    "shippingDays": 3,
+    "rating": 4.9,
+    "tags": ["eco-friendly", "stationery", "birthday", "under-25"]
+  },
+  {
+    "id": "p_006",
+    "name": "Stainless Steel Water Bottle",
+    "price": 24.99,
+    "description": "Double-walled insulated bottle, keeps drinks cold for 24h.",
+    "ecoScore": 9,
+    "shippingDays": 3,
+    "rating": 4.7,
+    "tags": ["eco-friendly", "home", "fitness", "gift"]
+  },
+  {
+    "id": "p_007",
+    "name": "Wireless Noise-Cancelling Earbuds",
+    "price": 89.99,
+    "description": "Premium sound with active noise cancellation and 30h battery.",
+    "ecoScore": 4,
+    "shippingDays": 2,
+    "rating": 4.8,
+    "tags": ["tech", "music", "gift"]
+  },
+  {
+    "id": "p_008",
+    "name": "Cork Yoga Mat",
+    "price": 68.00,
+    "description": "Non-slip cork surface with natural rubber base.",
+    "ecoScore": 9,
+    "shippingDays": 4,
+    "rating": 4.6,
+    "tags": ["eco-friendly", "fitness", "gift"]
+  },
+  {
+    "id": "p_009",
+    "name": "Beeswax Food Wraps",
+    "price": 18.50,
+    "description": "Set of 3 reusable food wraps, replaces plastic cling film.",
+    "ecoScore": 10,
+    "shippingDays": 3,
+    "rating": 4.5,
+    "tags": ["eco-friendly", "kitchen", "under-25", "gift"]
+  },
+  {
+    "id": "p_010",
+    "name": "Smart LED Desk Lamp",
+    "price": 42.00,
+    "description": "Adjustable color temperature, USB charging port, touch control.",
+    "ecoScore": 6,
+    "shippingDays": 2,
+    "rating": 4.4,
+    "tags": ["tech", "home", "gift"]
+  },
+  {
+    "id": "p_011",
+    "name": "Organic Herbal Tea Sampler",
+    "price": 22.00,
+    "description": "12 varieties of organic loose-leaf tea in a gift box.",
+    "ecoScore": 9,
+    "shippingDays": 3,
+    "rating": 4.8,
+    "tags": ["eco-friendly", "food", "gift", "under-25", "birthday"]
+  },
+  {
+    "id": "p_012",
+    "name": "Recycled PET Backpack",
+    "price": 55.00,
+    "description": "Durable backpack made from 100% recycled plastic bottles.",
+    "ecoScore": 9,
+    "shippingDays": 4,
+    "rating": 4.7,
+    "tags": ["eco-friendly", "travel", "gift"]
+  },
+  {
+    "id": "p_013",
+    "name": "Bluetooth Mechanical Keyboard",
+    "price": 79.99,
+    "description": "Compact 65% layout, hot-swappable switches, RGB backlight.",
+    "ecoScore": 3,
+    "shippingDays": 2,
+    "rating": 4.9,
+    "tags": ["tech", "gaming", "gift"]
+  },
+  {
+    "id": "p_014",
+    "name": "Handmade Soy Candle",
+    "price": 19.99,
+    "description": "Lavender and vanilla scented, 40-hour burn time.",
+    "ecoScore": 8,
+    "shippingDays": 3,
+    "rating": 4.6,
+    "tags": ["eco-friendly", "home", "under-25", "birthday", "gift"]
+  },
+  {
+    "id": "p_015",
+    "name": "Portable Espresso Maker",
+    "price": 65.00,
+    "description": "Hand-powered espresso maker for travel and camping.",
+    "ecoScore": 7,
+    "shippingDays": 3,
+    "rating": 4.3,
+    "tags": ["travel", "food", "gift"]
+  }
+]
