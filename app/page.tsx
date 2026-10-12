@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import Image from 'next/image';
+import ProductTable from '../components/ProductTable';
 
 type Product = {
   id: string;
@@ -25,6 +25,7 @@ export default function Home() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [buyingId, setBuyingId] = useState<string | null>(null);
+  const [view, setView] = useState<'cards' | 'table'>('cards');
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -111,26 +112,49 @@ export default function Home() {
 
   return (
     <div className="flex flex-col h-screen bg-gray-50">
-      {/* Header */}
       <header className="bg-white border-b border-gray-200 px-6 py-3">
-        <div className="max-w-4xl mx-auto flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center text-sm font-bold">
-            AI
+        <div className="max-w-5xl mx-auto flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center text-sm font-bold">
+              AI
+            </div>
+            <div>
+              <h1 className="font-semibold text-gray-900">
+                Agentic Commerce Copilot
+              </h1>
+              <p className="text-xs text-gray-500">
+                Powered by Groq + PayPal sandbox + AG Grid
+              </p>
+            </div>
           </div>
-          <div>
-            <h1 className="font-semibold text-gray-900">
-              Agentic Commerce Copilot
-            </h1>
-            <p className="text-xs text-gray-500">
-              Powered by Groq + PayPal sandbox
-            </p>
+
+          <div className="flex bg-gray-100 rounded-full p-1 text-xs">
+            <button
+              onClick={() => setView('cards')}
+              className={`px-3 py-1 rounded-full font-medium transition ${
+                view === 'cards'
+                  ? 'bg-white shadow text-gray-900'
+                  : 'text-gray-500'
+              }`}
+            >
+              Cards
+            </button>
+            <button
+              onClick={() => setView('table')}
+              className={`px-3 py-1 rounded-full font-medium transition ${
+                view === 'table'
+                  ? 'bg-white shadow text-gray-900'
+                  : 'text-gray-500'
+              }`}
+            >
+              Table
+            </button>
           </div>
         </div>
       </header>
 
-      {/* Chat area */}
       <main className="flex-1 overflow-y-auto">
-        <div className="max-w-4xl mx-auto px-6 py-6 space-y-6">
+        <div className="max-w-5xl mx-auto px-6 py-6 space-y-6">
           {messages.length === 0 && <EmptyState />}
 
           {messages.map((msg, i) => (
@@ -139,6 +163,7 @@ export default function Home() {
               message={msg}
               onBuy={buyProduct}
               buyingId={buyingId}
+              view={view}
             />
           ))}
 
@@ -155,12 +180,8 @@ export default function Home() {
         </div>
       </main>
 
-      {/* Input */}
       <footer className="bg-white border-t border-gray-200 px-6 py-4">
-        <form
-          onSubmit={sendMessage}
-          className="max-w-4xl mx-auto flex gap-2"
-        >
+        <form onSubmit={sendMessage} className="max-w-5xl mx-auto flex gap-2">
           <input
             type="text"
             value={input}
@@ -230,17 +251,22 @@ function MessageBubble({
   message,
   onBuy,
   buyingId,
+  view,
 }: {
   message: Message;
   onBuy: (p: Product) => void;
   buyingId: string | null;
+  view: 'cards' | 'table';
 }) {
   const isUser = message.role === 'user';
+  const hasProducts = message.products && message.products.length > 0;
+  const recommendedId = hasProducts ? message.products![0].id : undefined;
+
   return (
     <div className={`flex gap-3 ${isUser ? 'flex-row-reverse' : ''}`}>
       <Avatar role={message.role} />
       <div className={`flex-1 ${isUser ? 'flex justify-end' : ''}`}>
-        <div className="max-w-2xl">
+        <div className="max-w-3xl w-full">
           <div
             className={`rounded-2xl px-4 py-3 whitespace-pre-wrap text-sm ${
               isUser
@@ -251,50 +277,46 @@ function MessageBubble({
             {message.content}
           </div>
 
-          {message.products && message.products.length > 0 && (
-            <ProductList
-              products={message.products}
-              onBuy={onBuy}
-              buyingId={buyingId}
-            />
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function ProductList({
-  products,
-  onBuy,
-  buyingId,
-}: {
-  products: Product[];
-  onBuy: (p: Product) => void;
-  buyingId: string | null;
-}) {
-  const [top, ...rest] = products;
-  return (
-    <div className="mt-4 space-y-3">
-      {top && <ProductCard product={top} onBuy={onBuy} highlighted buyingId={buyingId} />}
-
-      {rest.length > 0 && (
-        <>
-          <p className="text-xs text-gray-500 mt-4 mb-2">
-            Other matches ({rest.length})
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {rest.slice(0, 4).map((p) => (
+          {hasProducts && view === 'cards' && (
+            <div className="mt-4 space-y-3">
               <ProductCard
-                key={p.id}
-                product={p}
+                product={message.products![0]}
+                onBuy={onBuy}
+                highlighted
+                buyingId={buyingId}
+              />
+              {message.products!.length > 1 && (
+                <>
+                  <p className="text-xs text-gray-500 mt-4 mb-2">
+                    Other matches ({message.products!.length - 1})
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {message.products!.slice(1, 5).map((p) => (
+                      <ProductCard
+                        key={p.id}
+                        product={p}
+                        onBuy={onBuy}
+                        buyingId={buyingId}
+                      />
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
+          )}
+
+          {hasProducts && view === 'table' && (
+            <div className="mt-4">
+              <ProductTable
+                products={message.products!}
+                recommendedId={recommendedId}
                 onBuy={onBuy}
                 buyingId={buyingId}
               />
-            ))}
-          </div>
-        </>
-      )}
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
